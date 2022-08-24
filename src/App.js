@@ -1,42 +1,20 @@
 import React, { useEffect, useState } from "react";
 import alanBtn from "@alan-ai/alan-sdk-web";
-import wordsToNumbers from "words-to-numbers";
 
 import NewsCards from "./components/NewsCards/NewsCards";
-import useStyles from "./styles.js";
 
 const alanApi =
   "9eda9fc966295a5eb65f5d66d4fc56202e956eca572e1d8b807a3e2338fdd0dc/stage";
 
 const App = () => {
   const [newsArticles, setNewsArticles] = useState([]);
-  const [activeArticle, setActiveArticle] = useState(-1);
-  const classes = useStyles();
+
   useEffect(() => {
     alanBtn({
       key: alanApi,
-      onCommand: ({ command, articles, number }) => {
+      onCommand: ({ command, articles }) => {
         if (command === "newHeadlines") {
           setNewsArticles(articles);
-          setActiveArticle(-1);
-        } else if (command === "highlight")
-          setActiveArticle((prevActiveArticle) => prevActiveArticle + 1);
-        else if (command === "open") {
-          const parsedNumber =
-            number.length > 2
-              ? wordsToNumbers(number, { fuzzy: true })
-              : number;
-
-          const article = articles[parsedNumber - 1];
-
-          if (parsedNumber > articles.length) {
-            alanBtn().playText("Please try again.");
-          } else if (article) {
-            window.open(article.url, "_blank");
-            alanBtn().playText("Opening..");
-          } else {
-            alanBtn().playText("Please try again.");
-          }
         }
       },
     });
@@ -44,14 +22,8 @@ const App = () => {
 
   return (
     <div>
-      <div className={classes.logoContainer}>
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5atmSMnxkN0JQ4RQMONqcMVh5ppLiaE8L34LfwoCpPQ&s"
-          className={classes.alanLogo}
-          alt="logo"
-        />
-      </div>
-      <NewsCards articles={newsArticles} activeArticle={activeArticle} />
+      <h1>Alan ai news Reader</h1>
+      <NewsCards articles={newsArticles} />
     </div>
   );
 };
