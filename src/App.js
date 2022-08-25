@@ -8,7 +8,7 @@ import useStyles from "./styles.js";
 import tellerLogo from "./components/logo/news-teller-logo.png";
 
 const alanApi =
-  "9eda9fc966295a5eb65f5d66d4fc56202e956eca572e1d8b807a3e2338fdd0dc/stage";
+  "b8fccf54b4e60bf2b65f5d66d4fc56202e956eca572e1d8b807a3e2338fdd0dc/stage";
 
 const App = () => {
   const [newsArticles, setNewsArticles] = useState([]);
